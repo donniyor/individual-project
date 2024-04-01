@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use app\models\CreateAdminForm;
-use app\models\Admin;
-use app\models\AdminSearch;
+use app\models\Users;
+use app\models\UsersSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -13,7 +13,7 @@ use app\components\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AdminController implements the CRUD actions for Admin model.
+ * AdminController implements the CRUD actions for Users model.
  */
 class AdminsController extends Controller
 {
@@ -45,13 +45,13 @@ class AdminsController extends Controller
     }
 
     /**
-     * Lists all Admin models.
+     * Lists all Users models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new AdminSearch();
+        $searchModel = new UsersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -61,7 +61,7 @@ class AdminsController extends Controller
     }
 
     /**
-     * Creates a new Admin model.
+     * Creates a new Users model.
      * If creation is successful, the browser will be redirected to the 'create' page.
      * @return string|\yii\web\Response
      */
@@ -80,7 +80,7 @@ class AdminsController extends Controller
     }
 
     /**
-     * Deletes an existing Admin model.
+     * Deletes an existing Users model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id
      * @return \yii\web\Response
@@ -94,15 +94,15 @@ class AdminsController extends Controller
     }
 
     /**
-     * Finds the Admin model based on its primary key value.
+     * Finds the Users model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id
-     * @return Admin the loaded model
+     * @return Users the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Admin::findOne(['id' => $id])) !== null) {
+        if (($model = Users::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

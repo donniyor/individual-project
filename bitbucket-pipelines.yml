@@ -22,7 +22,7 @@ pipelines:
           after-script:
             - ./telegram_docker.sh
       - step:
-          name: Deploy to K8s Bilim-Makon-Admin-Prod
+          name: Deploy to K8s Bilim-Makon-Users-Prod
           deployment: production
           image: alpine/helm:3.10.1
           script:
@@ -42,7 +42,7 @@ pipelines:
             # - helm upgrade --wait --timeout 300s --atomic --install intercom-admin global/intercom-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n in-production -f values.production.yaml
             - helm upgrade --install bilim-makon-admin global/bilim-makon-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n bm-production -f values.production.yaml
           after-script:
-            - ./telegram_deploy.sh Bilim-Makon-Admin-Prod
+            - ./telegram_deploy.sh Bilim-Makon-Users-Prod
     dev:
       - step: *send-tg-start
       - step:
@@ -58,7 +58,7 @@ pipelines:
           after-script:
             - ./telegram_docker.sh
       - step:
-          name: Deploy to K8s Bilim-Makon-Admin-Dev
+          name: Deploy to K8s Bilim-Makon-Users-Dev
           deployment: test
           image: alpine/helm:3.10.1
           script:
@@ -78,4 +78,4 @@ pipelines:
             # - helm upgrade --wait --timeout 300s --atomic --install intercom-admin global/intercom-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n in-development -f values.yaml
             - helm upgrade --install bilim-makon-admin global/bilim-makon-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n bm-development -f values.yaml
           after-script:
-            - ./telegram_deploy.sh Bilim-Makon-Admin-Dev
+            - ./telegram_deploy.sh Bilim-Makon-Users-Dev

@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 //use app\models\SignupForm;
-use app\models\Admin;
+use app\models\Users;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\User;
@@ -85,8 +85,8 @@ class AuthController extends Controller
 
     public function actionVerifyEmail($token)
     {
-        $user = Admin::findByVerificationToken($token);
-        $user->status = Admin::STATUS_ACTIVE;
+        $user = Users::findByVerificationToken($token);
+        $user->status = Users::STATUS_ACTIVE;
         $user->save();
         $this->flash('success', 'Вы успешно подтвердили свою почту.');
         return $this->render('VerifyEmail');

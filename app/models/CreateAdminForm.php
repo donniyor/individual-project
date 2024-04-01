@@ -24,13 +24,13 @@ class CreateAdminForm extends Model
         return [
             ['username', 'trim'],
             [['username'], 'required'],
-            ['username', 'unique', 'targetClass' => '\app\models\Admin', 'message' => 'Это имя уже занято'],
+            ['username', 'unique', 'targetClass' => '\app\models\Users', 'message' => 'Это имя уже занято'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\app\models\Admin', 'message' => 'Эта почта уже занята'],
+            ['email', 'unique', 'targetClass' => '\app\models\Users', 'message' => 'Эта почта уже занята'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -55,7 +55,7 @@ class CreateAdminForm extends Model
     public function createUser(): ?bool
     {
         if ($this->validate()) {
-            $user = new Admin();
+            $user = new Users();
             $user->username = $this->username;
             $user->email = $this->email;
 
@@ -74,7 +74,7 @@ class CreateAdminForm extends Model
         return false;
     }
 
-    protected function sendEmail(Admin $user): bool
+    protected function sendEmail(Users $user): bool
     {
         return Yii::$app
             ->mailer

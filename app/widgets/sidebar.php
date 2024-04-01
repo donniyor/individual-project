@@ -2,7 +2,7 @@
 
 namespace app\widgets;
 
-use app\models\Admin;
+use app\models\Users;
 use Yii;
 
 class sidebar
@@ -14,7 +14,7 @@ class sidebar
     public function __construct()
     {
         $this->controller = Yii::$app->controller->id;
-        $this->role = Admin::getRole();
+        $this->role = Users::getRole();
     }
 
     /**

@@ -23,8 +23,8 @@ class PasswordResetRequestForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => '\app\models\Admin',
-                'filter' => ['status' => Admin::STATUS_ACTIVE],
+                'targetClass' => '\app\models\Users',
+                'filter' => ['status' => Users::STATUS_ACTIVE],
                 'message' => 'There is no user with this email address.'
             ],
         ];
@@ -37,9 +37,9 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        /* @var $user Admin */
-        $user = Admin::findOne([
-            'status' => Admin::STATUS_ACTIVE,
+        /* @var $user Users */
+        $user = Users::findOne([
+            'status' => Users::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
 
@@ -47,7 +47,7 @@ class PasswordResetRequestForm extends Model
             return false;
         }
         
-        if (!Admin::isPasswordResetTokenValid($user->password_reset_token)) {
+        if (!Users::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
             if (!$user->save()) {
                 return false;

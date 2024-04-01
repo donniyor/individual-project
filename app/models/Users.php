@@ -11,7 +11,7 @@ use yii\helpers\Html;
 use yii\web\IdentityInterface;
 
 /**
- * Admin model
+ * Users model
  *
  * @property integer $id
  * @property string $username
@@ -23,7 +23,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property string $password write-only password
  */
-class Admin extends ActiveRecord implements IdentityInterface
+class Users extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -116,18 +116,18 @@ class Admin extends ActiveRecord implements IdentityInterface
                 LogActions::addLog(
                     'add',
                     "Пользователь добавил другого пользователя",
-                    Html::a('Открыть', ['/admins/?AdminSearch[username]=' . $this->username]));
+                    Html::a('Открыть', ['/admins/?UsersSearch[username]=' . $this->username]));
             } else {
                 if ($this->status == self::STATUS_DELETED) {
                     LogActions::addLog(
                         'delete',
                         "Пользователь удалил другого пользователя",
-                        Html::a('Открыть', ['/admins/?AdminSearch[username]=' . $this->username]));
+                        Html::a('Открыть', ['/admins/?UsersSearch[username]=' . $this->username]));
                 } else {
                     LogActions::addLog(
                         'update',
                         "Пользователь обновил другого пользователя",
-                        Html::a('Открыть', ['/admins/?AdminSearch[username]=' . $this->username]));
+                        Html::a('Открыть', ['/admins/?UsersSearch[username]=' . $this->username]));
                 }
             }
         } else {
@@ -155,7 +155,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id): ActiveRecord
+    public static function findIdentity($id): null|ActiveRecord
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }

@@ -43,7 +43,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
     {
         return [
             'item_name' => 'Item Name',
-            'user_id' => 'Admin ID',
+            'user_id' => 'Users ID',
             'created_at' => 'Created At',
         ];
     }

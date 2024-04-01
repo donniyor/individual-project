@@ -2,7 +2,7 @@
 
 namespace app\helpers;
 
-use app\models\Admin;
+use app\models\Users;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,7 +41,7 @@ class Buttons
         $url = \Yii::$app->controller->id;
 
         if ($delete) {
-            $delete = Admin::getStatusToDelete($model->status);
+            $delete = Users::getStatusToDelete($model->status);
         }
 
         $delete = $delete ? '<a href="' . Url::to(["/{$url}/delete", "id" => $model->primaryKey]) . '" class="btn btn-danger actions confirm-delete" title="Удалить"><i class="material-icons-two-tone">close</i></a>' : '';

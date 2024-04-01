@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\models\Admin;
+use app\models\Users;
 use app\rules\canCreateRule;
 use app\rules\canDeleteRule;
 use Yii;
@@ -15,10 +15,10 @@ class MyRbacController extends Controller
 
         $auth = Yii::$app->authManager;
         $auth->removeAll();
-        Admin::deleteAll();
+        Users::deleteAll();
 
         /* new user */
-        $superAdmin = new Admin();
+        $superAdmin = new Users();
         $superAdmin->username = 'superAdmin';
         $superAdmin->email = 'superAdmin@mail.ru';
         $superAdmin->setPassword('superAdmin');

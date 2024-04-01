@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Admin;
+use app\models\Users;
 
 /**
- * AdminSearch represents the model behind the search form of `app\models\Admin`.
+ * UsersSearch represents the model behind the search form of `app\models\Users`.
  */
-class AdminSearch extends Admin
+class UsersSearch extends Users
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class AdminSearch extends Admin
      */
     public function search($params)
     {
-        $query = Admin::find()->orderBy(['created_at' => SORT_DESC]);
+        $query = Users::find()->orderBy(['created_at' => SORT_DESC]);
 
         // add conditions that should always apply here
 

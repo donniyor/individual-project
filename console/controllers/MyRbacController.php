@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use app\models\Admin;
+use app\models\Users;
 use app\rules\canDeleteRule;
 use Yii;
 use yii\console\Controller;
@@ -15,25 +15,25 @@ class MyRbacController extends Controller
         /* default */
         $auth = Yii::$app->authManager;
         $auth->removeAll();
-        Admin::deleteAll();
+        Users::deleteAll();
 
         /* Create users */
         // Тестовые данные
-        $superAdmin = new Admin();
+        $superAdmin = new Users();
         $superAdmin->username = 'superAdmin';
         $superAdmin->email = 'superAdmin@mail.ru';
         $superAdmin->setPassword('superAdmin');
         $superAdmin->generateAuthKey();
         $superAdmin->save();
 
-        $admin = new Admin();
+        $admin = new Users();
         $admin->username = 'admin123';
         $admin->email = 'admin123@mail.ru';
         $admin->setPassword('admin123');
         $admin->generateAuthKey();
         $admin->save();
 
-        $moderator = new Admin();
+        $moderator = new Users();
         $moderator->username = 'moderator';
         $moderator->email = 'moderator@mail.ru';
         $moderator->setPassword('moderator');
@@ -114,12 +114,12 @@ class MyRbacController extends Controller
 /*
 
         $superAdminRole = $auth->createRole('superAdmin');
-        $superAdminRole->description = "Super Admin";
+        $superAdminRole->description = "Super Users";
         $auth->add($superAdminRole);
 
 
         $adminRole = $auth->createRole('admin');
-        $adminRole->description = "Admin";
+        $adminRole->description = "Users";
         $auth->add($adminRole);
 
 
