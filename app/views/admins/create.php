@@ -29,9 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
             </div>
             <div class="mb-3">
-                <?=$form->field($model, 'kindergarten_id')->dropDownList(BaseModel::getKindergartensList())?>
-            </div>
-            <div class="mb-3">
                 <?= $form->field($model, 'password')->passwordInput() ?>
             </div>
 

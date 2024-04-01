@@ -92,18 +92,6 @@ abstract class BaseModel extends ActiveRecord
         }
     }
 
-    public static function getRegionsList(): array
-    {
-        $array = Regions::find()->all();
-        return $array ? ArrayHelper::map($array, 'id', fn($arr) => $arr->status === BaseModel::STATUS_DELETED ? $arr->name['ru'].' (удален)' : $arr->name['ru']) : ['Нет данных в таблице'];
-    }
-
-    public static function getKindergartensList(): array
-    {
-        $array = Kindergartens::find()->all();
-        return $array ? ArrayHelper::map($array, 'id', fn($arr) => $arr->status === BaseModel::STATUS_DELETED ? $arr->name['ru'].' (удален)' : $arr->name['ru']) : ['Нет данных в таблице'];
-    }
-
     public static function giveStatus($model): ?array
     {
         return $model->status === self::STATUS_ACTIVE ? null : ['class' => 'table-danger'];

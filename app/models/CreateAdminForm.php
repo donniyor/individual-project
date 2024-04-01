@@ -11,23 +11,21 @@ use yii\base\Model;
  */
 class CreateAdminForm extends Model
 {
-    public $username;
-    public $email;
-    public $password;
-    public $kindergarten_id;
+    public string $username = '';
+    public string $email = '';
+    public string $password = '';
 
     /**
      * {@inheritdoc}
      */
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['username', 'trim'],
-            [['username', 'kindergarten_id'], 'required'],
+            [['username'], 'required'],
             ['username', 'unique', 'targetClass' => '\app\models\Admin', 'message' => 'Это имя уже занято'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-            ['kindergarten_id', 'integer'],
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
@@ -39,12 +37,11 @@ class CreateAdminForm extends Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'username' => 'Имя Пользователя',
             'email' => 'Почта',
-            'kindergarten_id' => 'Детский Сад',
             'password' => 'Пароль',
         ];
     }
@@ -55,13 +52,12 @@ class CreateAdminForm extends Model
      * @return bool|null whether the creating new account was successful and email was sent
      * @throws Exception
      */
-    public function createUser():?bool
+    public function createUser(): ?bool
     {
         if ($this->validate()) {
             $user = new Admin();
             $user->username = $this->username;
             $user->email = $this->email;
-            $user->kindergarten_id = $this->kindergarten_id;
 
             $user->setPassword($this->password);
             $user->generateAuthKey();
@@ -78,12 +74,7 @@ class CreateAdminForm extends Model
         return false;
     }
 
-    /**
-     * Sends confirmation email to user
-     * @param Admin $user user model to with email should be send
-     * @return bool whether the email was sent
-     */
-    protected function sendEmail($user)
+    protected function sendEmail(Admin $user): bool
     {
         return Yii::$app
             ->mailer

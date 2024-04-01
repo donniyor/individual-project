@@ -14,11 +14,6 @@ use app\widgets\sidebar;
             </li>
 
             <?= sidebar::make()
-                ->add('Регионы', 'place', 'regions', ['superAdmin'])
-                ->add('Детскийе Сады', 'child_care', 'kindergarten', ['superAdmin'])
-                ->add('Пользователи', 'account_circle', 'users', ['superAdmin'])
-                ->add('Счета', 'paid', 'transactions', ['superAdmin', 'admin'], 'transactions?TransactionsSearch[payment_status]=SUCCESS')
-                ->add('Обратная Связь', 'add_comment', 'feedbacks', ['superAdmin'])
                 ->add('Администраторы', 'people_alt', 'admins', ['superAdmin'])
                 ->all()
             ?>

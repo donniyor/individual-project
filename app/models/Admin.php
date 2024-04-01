@@ -20,7 +20,6 @@ use yii\web\IdentityInterface;
  * @property string $verification_token
  * @property string $email
  * @property string $auth_key
- * @property integer $kindergarten_id
  * @property integer $status
  * @property string $password write-only password
  */
@@ -44,7 +43,6 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             'username' => 'Имя Пользователя',
             'email' => 'Почта',
-            'kindergarten_id' => 'Детские Сад',
             'password' => 'Пароль',
             'role' => 'Роль',
         ];
@@ -85,11 +83,6 @@ class Admin extends ActiveRecord implements IdentityInterface
     public static function getRole(): string
     {
         return Yii::$app->user->identity->roles[0]->item_name ?? '';
-    }
-
-    public static function getKindergartenId(): int
-    {
-        return Yii::$app->user->identity->kindergarten_id;
     }
 
     public static function showCreate(int $count): bool
@@ -154,9 +147,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username'], 'required'],
-            ['kindergarten_id', 'safe'],
-            ['kindergarten_id', 'integer'],
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE], // todo status inactive
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
