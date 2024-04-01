@@ -10,7 +10,7 @@ class m130428_100811_create_log_actions extends Migration
     /**
      * {@inheritdoc}
      */
-    public function up()
+    public function up(): void
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -33,7 +33,7 @@ class m130428_100811_create_log_actions extends Migration
     /**
      * {@inheritdoc}
      */
-    public function down()
+    public function down(): void
     {
         $this->dropTable('{{%log_actions}}');
     }

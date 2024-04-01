@@ -35,7 +35,7 @@ class Admin extends ActiveRecord implements IdentityInterface
      */
     public static function tableName(): string
     {
-        return '{{%admins}}';
+        return '{{%users}}';
     }
 
     public function attributeLabels(): array

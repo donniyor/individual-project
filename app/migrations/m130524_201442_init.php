@@ -4,14 +4,14 @@ use yii\db\Migration;
 
 class m130524_201442_init extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%admins}}', [
+        $this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
 
             'username' => $this->string()->notNull()->unique(),
@@ -29,7 +29,7 @@ class m130524_201442_init extends Migration
 
     }
 
-    public function down()
+    public function down(): void
     {
         $this->dropTable('{{%admins}}');
     }
