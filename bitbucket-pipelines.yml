@@ -1,0 +1,81 @@
+definitions:
+  steps:
+    - step: &send-tg-start
+        name: Send to Telegram
+        script:
+          - curl -s -X POST https://api.telegram.org/bot1423950829:AAGMjz9k4HpLFCGUk6_o4IcKfz_98Z4d-4I/sendMessage -d chat_id=-1001441304307 -d text="[${BITBUCKET_BRANCH}] ${BITBUCKET_GIT_HTTP_ORIGIN}/pipelines/results/${BITBUCKET_BUILD_NUMBER} is STARTED"
+
+pipelines:
+  branches:
+    master:
+      - step: *send-tg-start
+      - step:
+          name: Build docker and push docker image on DockerHub
+          caches:
+            - docker
+          services:
+            - docker
+          script:
+            - docker build -t devgs/bilim-makon-admin:prod-${BITBUCKET_BUILD_NUMBER} .
+            - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_TOKEN
+            - docker push devgs/bilim-makon-admin:prod-${BITBUCKET_BUILD_NUMBER}
+          after-script:
+            - ./telegram_docker.sh
+      - step:
+          name: Deploy to K8s Bilim-Makon-Admin-Prod
+          deployment: production
+          image: alpine/helm:3.10.1
+          script:
+            - mkdir ~/.kube
+            - echo $AIR_KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
+            - export KUBECONFIG=~/.kube/config
+            - apk add gettext curl bash
+            - cd helm
+            - envsubst '$BITBUCKET_BUILD_NUMBER' < Chart.yaml > tmpfile && mv tmpfile Chart.yaml
+            - envsubst '$BITBUCKET_BUILD_NUMBER' < values.production.yaml > tmpfile && mv tmpfile values.production.yaml
+            - helm repo add global https://helm.globalpay.uz --username global --password $HELM_PASSWORD
+            - helm repo update
+            - helm dependency build
+            - helm plugin install https://github.com/chartmuseum/helm-push
+            - helm cm-push -f . global
+            - helm repo update
+            # - helm upgrade --wait --timeout 300s --atomic --install intercom-admin global/intercom-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n in-production -f values.production.yaml
+            - helm upgrade --install bilim-makon-admin global/bilim-makon-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n bm-production -f values.production.yaml
+          after-script:
+            - ./telegram_deploy.sh Bilim-Makon-Admin-Prod
+    dev:
+      - step: *send-tg-start
+      - step:
+          name: Build docker and push docker image on DockerHub
+          caches:
+            - docker
+          services:
+            - docker
+          script:
+            - docker build -t devgs/bilim-makon-admin:dev-${BITBUCKET_BUILD_NUMBER} .
+            - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_TOKEN
+            - docker push devgs/bilim-makon-admin:dev-${BITBUCKET_BUILD_NUMBER}
+          after-script:
+            - ./telegram_docker.sh
+      - step:
+          name: Deploy to K8s Bilim-Makon-Admin-Dev
+          deployment: test
+          image: alpine/helm:3.10.1
+          script:
+            - mkdir ~/.kube
+            - echo $AIR_KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
+            - export KUBECONFIG=~/.kube/config
+            - apk add gettext curl bash
+            - cd helm
+            - envsubst '$BITBUCKET_BUILD_NUMBER' < Chart.yaml > tmpfile && mv tmpfile Chart.yaml
+            - envsubst '$BITBUCKET_BUILD_NUMBER' < values.yaml > tmpfile && mv tmpfile values.yaml
+            - helm repo add global https://helm.globalpay.uz --username global --password $HELM_PASSWORD
+            - helm repo update
+            - helm dependency build
+            - helm plugin install https://github.com/chartmuseum/helm-push
+            - helm cm-push -f . global
+            - helm repo update
+            # - helm upgrade --wait --timeout 300s --atomic --install intercom-admin global/intercom-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n in-development -f values.yaml
+            - helm upgrade --install bilim-makon-admin global/bilim-makon-admin --version 0.1.$BITBUCKET_BUILD_NUMBER -n bm-development -f values.yaml
+          after-script:
+            - ./telegram_deploy.sh Bilim-Makon-Admin-Dev
