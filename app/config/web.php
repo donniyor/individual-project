@@ -37,22 +37,15 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
+        /*'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
             // send all mails to a file by default.
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'yii2_SmtpTransport',
-                'username' => 'supports@global.uz',
-                'password' => 'ahyknhnjzzhskpaf',
-                'host' => 'smtp.gmail.com',
-                'port' => '465',
-                'scheme' => 'smtps',
-                'sender' => 'noreply@global.uz',
-                'encryption' => 'tls',
             ],
-        ],
+        ],*/
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -84,15 +77,7 @@ $config = [
             'rules' => [
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
             ]
-        ],
-        'minio' => [
-            'class' => 'bevin1984\MinioClient',
-            'key' => 'minio',
-            'secret' => 'JavaJavokh3r',
-            'endpoint' => 'https://fs.globaltrans.uz',
-            'bucket' => 'bilim-makon',
-            'region' => 's',
-        ],
+        ]
     ],
     'modules' => [
         'gridview' => ['class' => 'kartik\grid\Module']

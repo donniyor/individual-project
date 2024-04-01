@@ -26,12 +26,13 @@ class Upload
         if (!$fileInstance->saveAs($fileName)) {
             throw new HttpException(500, 'Cannot upload file "' . $fileName . '". Please check write permissions.');
         }
-
-        $im = fopen(Yii::getAlias('@webroot' . Upload::getLink($fileName)), 'r');
-        $f = Upload::getFileName($fileInstance, $namePostfix);
-        $content = Yii::$app->minio->writeStream($f, $im);
-        
-        return $content['path'];
+        try{
+            $uploadedImage = Image::getImagine()->open(Yii::getAlias('@webroot' . Upload::getLink($fileName)));
+            $originalSize = $uploadedImage->getSize();
+            $uploadedImage->resize($originalSize->scale(min(1, 1000 / $originalSize->getWidth())))->save(Yii::getAlias('@webroot' . Upload::getLink($fileName)), ['quality' => 80]);
+        } catch (\Exception $e) {
+        }
+        return Upload::getLink($fileName);
     }
 
     public  static function fileAlias(UploadedFile $fileInstance, $namePostfix = true): string
