@@ -4,7 +4,6 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Quizizz;
 
 /**
  * QuizizzSearch represents the model behind the search form of `app\models\Quizizz`.
@@ -40,7 +39,7 @@ class QuizizzSearch extends Quizizz
      */
     public function search($params): ActiveDataProvider
     {
-        $query = Quizizz::find();
+        $query = Quizizz::find()->with('user');
 
         // add conditions that should always apply here
 

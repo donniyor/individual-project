@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Quizizz $model */
 
-$this->title = 'Update Quizizz: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Quizizzs', 'url' => ['index']];
+$this->title = 'Редактировать опрос: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Опросы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="quizizz-update">
 

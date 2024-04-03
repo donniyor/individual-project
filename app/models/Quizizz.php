@@ -2,9 +2,9 @@
 
 namespace app\models;
 
+use app\components\BaseModel;
 use Yii;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "quizizz".
@@ -21,7 +21,7 @@ use yii\db\ActiveRecord;
  * @property TestSolution[] $testSolutions
  * @property Users $user
  */
-class Quizizz extends \yii\db\ActiveRecord
+class Quizizz extends BaseModel
 {
     public static function tableName(): string
     {
@@ -33,7 +33,7 @@ class Quizizz extends \yii\db\ActiveRecord
         return [
             [['title', 'description', 'status'], 'required'],
             [['description'], 'string'],
-            [['user_id', 'status'], 'default', 'value' => null],
+            [['user_id', 'status'], 'default', 'value' => Yii::$app->user->id],
             [['user_id', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -45,12 +45,12 @@ class Quizizz extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'user_id' => 'User ID',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'title' => 'Название',
+            'description' => 'Описание',
+            'user_id' => 'Автор',
+            'status' => 'Статус',
+            'created_at' => 'Дата добавления',
+            'updated_at' => 'Дата редактирования',
         ];
     }
 
@@ -67,5 +67,10 @@ class Quizizz extends \yii\db\ActiveRecord
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(Users::class, ['id' => 'user_id']);
+    }
+
+    protected function logTitle(): string
+    {
+        return 'опрос';
     }
 }

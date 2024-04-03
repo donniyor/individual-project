@@ -92,9 +92,9 @@ abstract class BaseModel extends ActiveRecord
         }
     }
 
-    public static function giveStatus($model): ?array
+    public static function giveStatus(int $status): ?array
     {
-        return $model->status === self::STATUS_ACTIVE ? null : ['class' => 'table-danger'];
+        return $status === self::STATUS_ACTIVE ? null : ['class' => 'table-danger'];
     }
 
     public function validateJson($attribute, $params): void

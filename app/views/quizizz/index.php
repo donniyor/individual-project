@@ -1,5 +1,6 @@
 <?php
 
+use app\helpers\Buttons;
 use app\models\Quizizz;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,7 +11,7 @@ use yii\grid\GridView;
 /** @var app\models\QuizizzSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Quizizzs';
+$this->title = 'Опросы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="quizizz-index">
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Quizizz', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить опрос', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -26,22 +27,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'rowOptions' => static fn($model) => $model->giveStatus($model->status),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
             'description:ntext',
-            'user_id',
-            'status',
-            //'created_at',
-            //'updated_at',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Quizizz $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'label' => 'Автор',
+                'value' => 'user.username',
             ],
+            [
+                'header' => 'Действия',
+                'format' => 'html',
+                'headerOptions' => ['width' => '150'],
+                'content' => static fn($model) => Buttons::get($model)
+            ],
+        ],
+        'pager' => [
+            'class' => '\yii\bootstrap5\LinkPager',
         ],
     ]); ?>
 

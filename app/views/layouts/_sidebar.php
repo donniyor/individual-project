@@ -5,7 +5,7 @@ use app\widgets\sidebar;
 ?>
 <div class="app-sidebar">
     <div class="logo logo-sm">
-        <a href="/">Bilim Makon Admin</a>
+        <a href="/">Опросник</a>
     </div>
     <div class="app-menu">
         <ul class="accordion-menu">
