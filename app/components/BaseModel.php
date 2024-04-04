@@ -106,4 +106,13 @@ abstract class BaseModel extends ActiveRecord
             }
         }
     }
+
+    public static function getViewStatus(int $status): string
+    {
+        return match ($status) {
+            -1 => 'Удален',
+            1 => 'Активен',
+            default => ''
+        };
+    }
 }

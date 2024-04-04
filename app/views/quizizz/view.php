@@ -1,5 +1,6 @@
 <?php
 
+use app\components\BaseModel;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'user_id',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => static fn($model) => BaseModel::getViewStatus($model->status)
+            ],
             'created_at',
             'updated_at',
         ],

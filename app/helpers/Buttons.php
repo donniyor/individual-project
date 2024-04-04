@@ -13,7 +13,7 @@ class Buttons
     {
         $url = \Yii::$app->controller->id;
         $update = '<a href="' . Url::to(["/{$url}/update", "id" => $model->primaryKey]) . '" class="btn btn-bd-light actions" title="Редактирование"><i class="material-icons-two-tone">create</i></a>';
-        $view = '<a href="' . Url::to(["/{$url}/view", "id" => $model->primaryKey]) . '" class="btn btn-bd-light actions" title="Просмотр"><i class="material-icons">visibility</i></a>';
+        $view = '<a href="' . Url::to(["/{$url}/make", "id" => $model->primaryKey]) . '" class="btn btn-bd-light actions" title="Просмотр"><i class="material-icons">visibility</i></a>';
 
         if ($delete) {
             $delete = $model->status === 1;

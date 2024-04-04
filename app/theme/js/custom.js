@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     const body = $('body');
     body.on('click', '.confirm-delete', function () {
         const button = $(this).addClass('disabled');
@@ -65,13 +65,33 @@ $(function () {
         enableTime: true,
         dateFormat: "m-d-Y H:i"
     });
+
     $('.date-changer').daterangepicker({
-        locale: {
-            format: 'DD.MM.YYYY'
-        }
+        locale: { format: 'DD.MM.YYYY' }
     });
 
+    let addQuestion = '.ajax-add-question'
+    $(body).on('click', addQuestion, (e) => {
+        e.preventDefault()
 
+        $.ajax({
+            url: $(addQuestion).attr('href'),
+            type: 'GET',
+            success: (data) => $('.make-question').append(data),
+            error: (data) => console.log(data)
+        })
+    })
 
+    let addAnswer = '.ajax-add-answer'
+    $(body).on('click', addAnswer, (e) => {
+        e.preventDefault()
+
+        $.ajax({
+            url: $(addAnswer).attr('href'),
+            type: 'GET',
+            success: (data) => $('.make-answer').append(data),
+            error: (data) => console.log(data)
+        })
+    })
 });
 

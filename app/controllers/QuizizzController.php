@@ -2,11 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\AnswerOptions;
+use app\models\Questions;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * QuizizzController implements the CRUD actions for Quizizz model.
@@ -53,12 +57,12 @@ class QuizizzController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    /*public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
+    }*/
 
     /**
      * Creates a new Quizizz model.
@@ -130,5 +134,30 @@ class QuizizzController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionMake(int $id): string
+    {
+        return $this->render('make', [
+            'question' => new Questions,
+            'answer' => new AnswerOptions(),
+            'id' => $id
+        ]);
+    }
+
+    public function actionQuestion(int $id): string
+    {
+        return $this->renderPartial('question', [
+            'question' => new Questions(),
+            'id' => $id
+        ]);
+    }
+
+    public function actionAnswer(int $id): string
+    {
+        return $this->renderPartial('answer', [
+            'answer' => new AnswerOptions(),
+            'id' => $id
+        ]);
     }
 }
