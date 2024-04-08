@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="mb-3 ml-5">
-        <?= $form->field($answer, 'answer')->textarea(['maxlength' => true]) ?>
+        <?= $form->field($answer, 'answer')->textInput(['maxlength' => true]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -67,11 +67,11 @@ $(document).ready(function () {
     });
 
     $('.date-changer').daterangepicker({
-        locale: { format: 'DD.MM.YYYY' }
+        locale: {format: 'DD.MM.YYYY'}
     });
 
     let addQuestion = '.ajax-add-question'
-    $(body).on('click', addQuestion, (e) => {
+    $(body).on('click', addQuestion, function(e) {
         e.preventDefault()
 
         $.ajax({
@@ -83,7 +83,7 @@ $(document).ready(function () {
     })
 
     let addAnswer = '.ajax-add-answer'
-    $(body).on('click', addAnswer, (e) => {
+    $(body).on('click', addAnswer, function(e) {
         e.preventDefault()
 
         $.ajax({
@@ -93,5 +93,26 @@ $(document).ready(function () {
             error: (data) => console.log(data)
         })
     })
+
+    let saveQuestion = '.input-save'
+    $(body).on('blur', saveQuestion, function(e) {
+        e.preventDefault()
+
+        console.log($(this).data('quiz_id'))
+        console.log($(this).val())
+
+        $.ajax({
+            url: $(this).data('url'),
+            type: 'POST',
+            data:
+                {
+                    'quiz_id': $(this).data('quiz_id'),
+                    'question': $(this).val(),
+                },
+            success: (data) => console.log(data),
+            error: (data) => console.log(data)
+        })
+    })
+
 });
 

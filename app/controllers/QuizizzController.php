@@ -7,7 +7,7 @@ use app\models\Questions;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
 use Yii;
-use yii\web\Controller;
+use app\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -143,6 +143,18 @@ class QuizizzController extends Controller
             'answer' => new AnswerOptions(),
             'id' => $id
         ]);
+    }
+
+    public function actionSaveQuestion()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new Questions();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post(), '') && $model->save()) {
+            return true;
+        }
+
+        return false;
     }
 
     public function actionQuestion(int $id): string

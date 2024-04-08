@@ -16,8 +16,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="mb-3">
-        <?=$form->field($question, 'quiz_id')->hiddenInput(['value' => $id])->label(false)?>
-        <?= $form->field($question, 'question')->textarea(['maxlength' => true]) ?>
+        <?= $form->field($question, 'question')
+            ->textarea([
+                'maxlength' => true,
+                'class' => 'form-control input-save',
+                'data-url' => Url::to('/quizizz/save-question'),
+                'data-quiz_id' => $id
+            ]) ?>
     </div>
 
 
@@ -25,7 +30,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="mb-3">
-        <?=Html::a('Добавить ответ', Url::to(['answer', 'id' => $id]), ['class' => 'btn btn-success btn-sm ajax-add-answer'])?>
+        <?= Html::a('Добавить ответ', Url::to(['answer', 'id' => $id]), ['class' => 'btn btn-success btn-sm ajax-add-answer']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

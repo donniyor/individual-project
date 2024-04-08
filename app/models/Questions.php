@@ -29,9 +29,9 @@ class Questions extends BaseModel
     public function rules(): array
     {
         return [
-            [['question', 'quiz_id', 'status'], 'required'],
+            [['question', 'quiz_id'], 'required'],
             [['question'], 'string'],
-            [['quiz_id', 'status'], 'default', 'value' => null],
+            [['status'], 'default', 'value' => BaseModel::STATUS_ACTIVE],
             [['quiz_id', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quizizz::class, 'targetAttribute' => ['quiz_id' => 'id']],
