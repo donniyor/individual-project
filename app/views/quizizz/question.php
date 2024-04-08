@@ -25,12 +25,13 @@ use yii\widgets\ActiveForm;
             ]) ?>
     </div>
 
+    <div class="push-question">
+        <div class="make-answer">
+        </div>
 
-    <div class="make-answer">
-    </div>
-
-    <div class="mb-3">
-        <?= Html::a('Добавить ответ', Url::to(['answer', 'id' => $id]), ['class' => 'btn btn-success btn-sm ajax-add-answer']) ?>
+        <div class="mb-3">
+            <?= Html::a('Добавить ответ', Url::to(['answer', 'id' => $id]), ['class' => 'btn btn-success btn-sm ajax-add-answer']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

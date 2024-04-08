@@ -48,30 +48,8 @@ $(document).ready(function () {
         return false;
     })
 
-    $(".datepicker").flatpickr({
-        dateFormat: "m-d-Y",
-        allowInput: true,
-        parseDate: (datestr, format) => {
-            return moment(datestr, format, true).toDate();
-        },
-        formatDate: (date, format, locale) => {
-            return moment(date).format(format);
-        }
-    });
-
-    $(".event-date").flatpickr();
-
-    $(".dateTimePicker").flatpickr({
-        enableTime: true,
-        dateFormat: "m-d-Y H:i"
-    });
-
-    $('.date-changer').daterangepicker({
-        locale: {format: 'DD.MM.YYYY'}
-    });
-
     let addQuestion = '.ajax-add-question'
-    $(body).on('click', addQuestion, function(e) {
+    $(body).on('click', addQuestion, function (e) {
         e.preventDefault()
 
         $.ajax({
@@ -83,33 +61,59 @@ $(document).ready(function () {
     })
 
     let addAnswer = '.ajax-add-answer'
-    $(body).on('click', addAnswer, function(e) {
+    $(body).on('click', addAnswer, function (e) {
         e.preventDefault()
+        let $input = $(this)
 
         $.ajax({
             url: $(addAnswer).attr('href'),
             type: 'GET',
-            success: (data) => $('.make-answer').append(data),
+            success: function (data) {
+                $input.closest('.push-question').find('.make-answer').append(data)
+            },
             error: (data) => console.log(data)
         })
     })
 
     let saveQuestion = '.input-save'
-    $(body).on('blur', saveQuestion, function(e) {
+    $(body).on('blur', saveQuestion, function (e) {
         e.preventDefault()
-
-        console.log($(this).data('quiz_id'))
-        console.log($(this).val())
+        let $input = $(this)
 
         $.ajax({
-            url: $(this).data('url'),
+            url: $input.data('url'),
             type: 'POST',
             data:
                 {
-                    'quiz_id': $(this).data('quiz_id'),
-                    'question': $(this).val(),
+                    'id': $input.data('id'),
+                    'quiz_id': $input.data('quiz_id'),
+                    'question': $input.val(),
                 },
-            success: (data) => console.log(data),
+            success: function (data) {
+                console.log(data)
+                $input.attr('data-id', data.id)
+            },
+            error: (data) => console.log(data)
+        })
+    })
+
+    let savaAnswer = '.ajax-save-answer'
+    $(body).on('blur', savaAnswer, function (e) {
+        e.preventDefault()
+        let $input = $(this)
+
+        $.ajax({
+            url: $input.data('url'),
+            type: 'POST',
+            data:
+                {
+                    'id': $input.data('id'),
+                    'question_id': $input.data('question_id'),
+                    'answer': $input.val(),
+                },
+            success: function (data) {
+                $input.attr('data-id', data.id)
+            },
             error: (data) => console.log(data)
         })
     })

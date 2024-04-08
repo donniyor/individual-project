@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
@@ -15,7 +14,12 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="mb-3 ml-5">
-        <?= $form->field($answer, 'answer')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($answer, 'answer')->textInput([
+            'maxlength' => true,
+            'class' => 'form-control ajax-save-answer',
+            'data-url' => Url::to('/quizizz/save-answer'),
+            'data-question_id' => $id
+        ]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

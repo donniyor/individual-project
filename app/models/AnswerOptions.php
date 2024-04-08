@@ -28,9 +28,9 @@ class AnswerOptions extends BaseModel
     public function rules(): array
     {
         return [
-            [['answer', 'question_id', 'status'], 'required'],
+            [['answer', 'question_id'], 'required'],
             [['answer'], 'string'],
-            [['question_id', 'status'], 'default', 'value' => null],
+            [['status'], 'default', 'value' => BaseModel::STATUS_ACTIVE],
             [['question_id', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::class, 'targetAttribute' => ['question_id' => 'id']],

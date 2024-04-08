@@ -6,21 +6,17 @@ use app\models\AnswerOptions;
 use app\models\Questions;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
+use Throwable;
 use Yii;
 use app\components\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
-/**
- * QuizizzController implements the CRUD actions for Quizizz model.
- */
 class QuizizzController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
@@ -35,12 +31,7 @@ class QuizizzController extends Controller
         );
     }
 
-    /**
-     * Lists all Quizizz models.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new QuizizzSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -51,25 +42,7 @@ class QuizizzController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Quizizz model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    /*public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }*/
-
-    /**
-     * Creates a new Quizizz model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
         $model = new Quizizz();
 
@@ -87,13 +60,9 @@ class QuizizzController extends Controller
     }
 
     /**
-     * Updates an existing Quizizz model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id): string|Response
     {
         $model = $this->findModel($id);
 
@@ -107,13 +76,11 @@ class QuizizzController extends Controller
     }
 
     /**
-     * Deletes an existing Quizizz model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws Throwable
+     * @throws StaleObjectException
+     * @throws NotFoundHttpException
      */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
@@ -121,13 +88,9 @@ class QuizizzController extends Controller
     }
 
     /**
-     * Finds the Quizizz model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Quizizz the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
-    protected function findModel($id)
+    protected function findModel($id): Quizizz
     {
         if (($model = Quizizz::findOne(['id' => $id])) !== null) {
             return $model;
@@ -139,22 +102,37 @@ class QuizizzController extends Controller
     public function actionMake(int $id): string
     {
         return $this->render('make', [
+            'quiz' => Quizizz::find()->where(['id' => $id])->with('questions')->one(),
             'question' => new Questions,
             'answer' => new AnswerOptions(),
             'id' => $id
         ]);
     }
 
-    public function actionSaveQuestion()
+    public function actionSaveQuestion(): array
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = new Questions();
+        $id = Yii::$app->request->post('id');
+        $model = $id !== null ? Questions::findOne($id) : new Questions();
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post(), '') && $model->save()) {
-            return true;
+            return ['success' => true, 'id' => $model->id];
         }
 
-        return false;
+        return ['success' => false, 'errors' => $model->getErrors()];
+    }
+
+    public function actionSaveAnswer()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
+        $model = $id !== null ? AnswerOptions::findOne($id) : new AnswerOptions;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post(), '') && $model->save()) {
+            return ['success' => true, 'id' => $model->id];
+        }
+
+        return ['success' => false, 'errors' => $model->getErrors()];
     }
 
     public function actionQuestion(int $id): string
