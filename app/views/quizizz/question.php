@@ -21,7 +21,8 @@ use yii\widgets\ActiveForm;
                 'maxlength' => true,
                 'class' => 'form-control input-save',
                 'data-url' => Url::to('/quizizz/save-question'),
-                'data-quiz_id' => $id
+                'data-quiz_id' => $id,
+                'data-question_id' => $question->id ?? ''
             ]) ?>
     </div>
 

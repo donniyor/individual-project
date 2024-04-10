@@ -22,7 +22,7 @@ class QuizizzController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -67,7 +67,7 @@ class QuizizzController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['make', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -122,7 +122,7 @@ class QuizizzController extends Controller
         return ['success' => false, 'errors' => $model->getErrors()];
     }
 
-    public function actionSaveAnswer()
+    public function actionSaveAnswer(): array
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $id = Yii::$app->request->post('id');
@@ -143,11 +143,13 @@ class QuizizzController extends Controller
         ]);
     }
 
-    public function actionAnswer(int $id): string
+    public function actionAnswer()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
         return $this->renderPartial('answer', [
             'answer' => new AnswerOptions(),
-            'id' => $id
+            'id' => Yii::$app->request->post('id')
         ]);
     }
 }

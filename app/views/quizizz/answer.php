@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
             'maxlength' => true,
             'class' => 'form-control ajax-save-answer',
             'data-url' => Url::to('/quizizz/save-answer'),
-            'data-question_id' => $id
+            'data-question_id' => $id,
         ]) ?>
     </div>
 

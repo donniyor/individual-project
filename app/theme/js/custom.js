@@ -65,14 +65,22 @@ $(document).ready(function () {
         e.preventDefault()
         let $input = $(this)
 
-        $.ajax({
-            url: $(addAnswer).attr('href'),
-            type: 'GET',
-            success: function (data) {
-                $input.closest('.push-question').find('.make-answer').append(data)
-            },
-            error: (data) => console.log(data)
-        })
+        let question_id = $input.closest('.question-form').find('.input-save').data('question_id')
+        if (question_id === '') {
+            showError('Прежде чем добавлять ответ вы должны добавить вопрос')
+        } else {
+            $.ajax({
+                url: $(addAnswer).attr('href'),
+                type: 'POST',
+                data: {
+                    'id': $input.data('id')
+                },
+                success: function (data) {
+                    $input.closest('.push-question').find('.make-answer').append(data)
+                },
+                error: (data) => console.log(data)
+            })
+        }
     })
 
     let saveQuestion = '.input-save'
@@ -92,6 +100,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data)
                 $input.attr('data-id', data.id)
+                showError(data.errors.question.join(' '))
             },
             error: (data) => console.log(data)
         })
@@ -101,7 +110,6 @@ $(document).ready(function () {
     $(body).on('blur', savaAnswer, function (e) {
         e.preventDefault()
         let $input = $(this)
-
         $.ajax({
             url: $input.data('url'),
             type: 'POST',
@@ -118,5 +126,10 @@ $(document).ready(function () {
         })
     })
 
+
+    function showError(text) {
+        $('#error-massage').text(text)
+        $('.error-massage').stop(true, true).fadeIn('fast').delay(1000).fadeOut(1000);
+    }
 });
 
