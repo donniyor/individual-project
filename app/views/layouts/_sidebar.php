@@ -16,7 +16,7 @@ use app\widgets\sidebar;
             <?= sidebar::make()
                 ->add('Администраторы', 'people_alt', 'admins', ['superAdmin'])
                 ->add('Опросы', 'quiz', 'quizizz', ['superAdmin', 'admin'])
-                ->add('Пройти опрос', 'check_circle', 'test-solution', ['superAdmin', 'admin'])
+                ->add('Результаты опросов', 'check_circle', 'test-solution', ['superAdmin', 'admin'])
                 ->all()
             ?>
 

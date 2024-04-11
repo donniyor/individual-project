@@ -44,7 +44,7 @@ class ProblemSolving extends BaseModel
     {
         return [
             'id' => 'ID',
-            'question_id' => 'Question ID',
+            'question_id' => 'QuestionForm ID',
             'answer_id' => 'Answer ID',
             'test_solution_id' => 'Test Solution ID',
             'status' => 'Status',

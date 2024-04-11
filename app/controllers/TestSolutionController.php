@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\TestSolution;
-use app\models\TestSolutionSerach;
+use app\models\TestSolutionSearch;
 use Throwable;
 use yii\db\StaleObjectException;
 use yii\web\Controller;
@@ -31,7 +31,7 @@ class TestSolutionController extends Controller
 
     public function actionIndex(): string
     {
-        $searchModel = new TestSolutionSerach();
+        $searchModel = new TestSolutionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -50,7 +50,7 @@ class TestSolutionController extends Controller
         ]);
     }
 
-    public function actionCreate(): string|Response
+    public function actionCreate(int $id): string|Response
     {
         $model = new TestSolution();
 
@@ -64,6 +64,7 @@ class TestSolutionController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'quiz_id' => $id
         ]);
     }
 

@@ -73,7 +73,7 @@ $(document).ready(function () {
                 url: $(addAnswer).attr('href'),
                 type: 'POST',
                 data: {
-                    'id': $input.data('id')
+                    'question_id': $input.data('id')
                 },
                 success: function (data) {
                     $input.closest('.push-question').find('.make-answer').append(data)
@@ -83,7 +83,7 @@ $(document).ready(function () {
         }
     })
 
-    let saveQuestion = '.input-save'
+    let saveQuestion = '.ajax-question-save'
     $(body).on('blur', saveQuestion, function (e) {
         e.preventDefault()
         let $input = $(this)
@@ -99,8 +99,11 @@ $(document).ready(function () {
                 },
             success: function (data) {
                 console.log(data)
-                $input.attr('data-id', data.id)
-                showError(data.errors.question.join(' '))
+                if (data.success === false) {
+                    showError('question error')
+                } else {
+                    $input.attr('data-id', data.id)
+                }
             },
             error: (data) => console.log(data)
         })
@@ -121,14 +124,14 @@ $(document).ready(function () {
                 },
             success: function (data) {
                 $input.attr('data-id', data.id)
+                if (data.success === false) showError('answer error')
             },
             error: (data) => console.log(data)
         })
     })
 
-
-    function showError(text) {
-        $('#error-massage').text(text)
+    function showError(message) {
+        $('#error-massage').text(message)
         $('.error-massage').stop(true, true).fadeIn('fast').delay(1000).fadeOut(1000);
     }
 });

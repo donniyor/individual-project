@@ -56,12 +56,12 @@ class Quizizz extends BaseModel
 
     public function getQuestions(): ActiveQuery
     {
-        return $this->hasMany(Questions::class, ['quiz_id' => 'id']);
+        return $this->hasMany(Questions::class, ['quiz_id' => 'id'])->orderBy(['created_at' => SORT_ASC]);
     }
 
     public function getTestSolutions(): ActiveQuery
     {
-        return $this->hasMany(TestSolution::class, ['quiz_id' => 'id']);
+        return $this->hasMany(TestSolution::class, ['quiz_id' => 'id'])->orderBy(['created_at' => SORT_ASC]);
     }
 
     public function getUser(): ActiveQuery

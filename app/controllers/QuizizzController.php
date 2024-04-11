@@ -7,7 +7,6 @@ use app\models\Questions;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
 use Throwable;
-use Yii;
 use app\components\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
@@ -102,54 +101,7 @@ class QuizizzController extends Controller
     public function actionMake(int $id): string
     {
         return $this->render('make', [
-            'quiz' => Quizizz::find()->where(['id' => $id])->with('questions')->one(),
-            'question' => new Questions,
-            'answer' => new AnswerOptions(),
-            'id' => $id
-        ]);
-    }
-
-    public function actionSaveQuestion(): array
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $id = Yii::$app->request->post('id');
-        $model = $id !== null ? Questions::findOne($id) : new Questions();
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post(), '') && $model->save()) {
-            return ['success' => true, 'id' => $model->id];
-        }
-
-        return ['success' => false, 'errors' => $model->getErrors()];
-    }
-
-    public function actionSaveAnswer(): array
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $id = Yii::$app->request->post('id');
-        $model = $id !== null ? AnswerOptions::findOne($id) : new AnswerOptions;
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post(), '') && $model->save()) {
-            return ['success' => true, 'id' => $model->id];
-        }
-
-        return ['success' => false, 'errors' => $model->getErrors()];
-    }
-
-    public function actionQuestion(int $id): string
-    {
-        return $this->renderPartial('question', [
-            'question' => new Questions(),
-            'id' => $id
-        ]);
-    }
-
-    public function actionAnswer()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        return $this->renderPartial('answer', [
-            'answer' => new AnswerOptions(),
-            'id' => Yii::$app->request->post('id')
+            'quiz' => Quizizz::find()->where(['id' => $id])->orderBy(['created_at' => SORT_ASC])->with('questions')->one(),
         ]);
     }
 }

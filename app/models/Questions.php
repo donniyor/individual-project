@@ -52,17 +52,17 @@ class Questions extends BaseModel
 
     public function getAnswerOptions(): ActiveQuery
     {
-        return $this->hasMany(AnswerOptions::class, ['question_id' => 'id']);
+        return $this->hasMany(AnswerOptions::class, ['question_id' => 'id'])->orderBy(['created_at' => SORT_ASC]);
     }
 
     public function getProblemSolvings(): ActiveQuery
     {
-        return $this->hasMany(ProblemSolving::class, ['question_id' => 'id']);
+        return $this->hasMany(ProblemSolving::class, ['question_id' => 'id'])->orderBy(['created_at' => SORT_ASC]);
     }
 
     public function getQuiz(): ActiveQuery
     {
-        return $this->hasOne(Quizizz::class, ['id' => 'quiz_id']);
+        return $this->hasOne(Quizizz::class, ['id' => 'quiz_id'])->orderBy(['created_at' => SORT_ASC]);
     }
 
     protected function logTitle(): string

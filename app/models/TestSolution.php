@@ -42,11 +42,11 @@ class TestSolution extends BaseModel
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'quiz_id' => 'Quiz ID',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'user_id' => 'Пользователь',
+            'quiz_id' => 'Опрос',
+            'status' => 'Статус',
+            'created_at' => 'Дата прохождения',
+            'updated_at' => 'Дата перепрохождения',
         ];
     }
 
