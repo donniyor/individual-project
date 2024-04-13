@@ -15,7 +15,7 @@ use yii\helpers\Url;
 
 
     <div class="mb-3">
-        <?= QuestionForm::renderQuestionTextarea($question)?>
+        <?= QuestionForm::renderQuestionTextarea($question, $id)?>
     </div>
 
     <div class="push-question">

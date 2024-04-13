@@ -8,18 +8,18 @@ use yii\helpers\Url;
 
 class AnswerForm
 {
-    public static function renderAnswer(AnswerOptions $answerOptions, int $answerId = null): string
+    public static function renderAnswer(AnswerOptions $answerOptions, int $answerId): string
     {
         return static::generateTextareaHtml($answerOptions, $answerId);
     }
 
-    protected static function generateTextareaHtml(AnswerOptions $answerOptions, int $answerId = null): string
+    protected static function generateTextareaHtml(AnswerOptions $answerOptions, int $answerId): string
     {
         $textareaAttributes = [
             'maxlength' => true,
             'class' => 'form-control ajax-save-answer',
             'data-url' => Url::to('/answer-option/save-answer'),
-            'data-question_id' => $answerId ?? $answerOptions->question_id,
+            'data-question_id' => $answerOptions->question_id ?? $answerId,
             'data-id' => $answerOptions->id,
         ];
 

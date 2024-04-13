@@ -65,15 +65,15 @@ $(document).ready(function () {
         e.preventDefault()
         let $input = $(this)
 
-        let question_id = $input.closest('.question-form').find('.input-save').data('question_id')
-        if (question_id === '') {
+        let question_id = $input.closest('.question-form').find('.ajax-question-save').data('id')
+        if (question_id === undefined) {
             showError('Прежде чем добавлять ответ вы должны добавить вопрос')
         } else {
             $.ajax({
                 url: $(addAnswer).attr('href'),
                 type: 'POST',
                 data: {
-                    'question_id': $input.data('id')
+                    'question_id': question_id ?? $input.data('id')
                 },
                 success: function (data) {
                     $input.closest('.push-question').find('.make-answer').append(data)
@@ -87,7 +87,6 @@ $(document).ready(function () {
     $(body).on('blur', saveQuestion, function (e) {
         e.preventDefault()
         let $input = $(this)
-
         $.ajax({
             url: $input.data('url'),
             type: 'POST',
@@ -100,7 +99,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data)
                 if (data.success === false) {
-                    showError('question error')
+                    showError('Заполните вопрос')
                 } else {
                     $input.attr('data-id', data.id)
                 }
@@ -124,7 +123,7 @@ $(document).ready(function () {
                 },
             success: function (data) {
                 $input.attr('data-id', data.id)
-                if (data.success === false) showError('answer error')
+                if (data.success === false) showError('Заполните ответ')
             },
             error: (data) => console.log(data)
         })

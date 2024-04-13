@@ -23,12 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php foreach ($quiz->questions as $question) { ?>
         <div class="question-form">
-            <?= QuestionForm::renderQuestionTextarea($question)?>
+            <?= QuestionForm::renderQuestionTextarea($question, $question->id)?>
 
             <div class="push-question">
                 <div class="make-answer">
                     <?php foreach ($question->answerOptions as $answer) { ?>
-                        <?= AnswerForm::renderAnswer($answer)?>
+                        <?= AnswerForm::renderAnswer($answer, $answer->id)?>
                     <?php } ?>
                 </div>
 
