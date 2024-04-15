@@ -11,12 +11,13 @@ use yii\grid\GridView;
 /** @var app\models\QuizizzSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Опросы';
+$this->title = 'Пройти опрос';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <hr>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
