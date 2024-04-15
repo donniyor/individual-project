@@ -29,10 +29,11 @@ class TestSolution extends BaseModel
     public function rules(): array
     {
         return [
-            [['user_id', 'quiz_id', 'status'], 'required'],
+            [['user_id', 'quiz_id'], 'required'],
             [['user_id', 'quiz_id', 'status'], 'default', 'value' => null],
             [['user_id', 'quiz_id', 'status'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            [['created_at', 'updated_at', 'status'], 'safe'],
             [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quizizz::class, 'targetAttribute' => ['quiz_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
         ];

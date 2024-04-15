@@ -30,10 +30,11 @@ class ProblemSolving extends BaseModel
     public function rules(): array
     {
         return [
-            [['question_id', 'answer_id', 'test_solution_id', 'status'], 'required'],
+            [['question_id', 'answer_id', 'test_solution_id'], 'required'],
             [['question_id', 'answer_id', 'test_solution_id', 'status'], 'default', 'value' => null],
             [['question_id', 'answer_id', 'test_solution_id', 'status'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            [['created_at', 'updated_at', 'status'], 'safe'],
             [['answer_id'], 'exist', 'skipOnError' => true, 'targetClass' => AnswerOptions::class, 'targetAttribute' => ['answer_id' => 'id']],
             [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::class, 'targetAttribute' => ['question_id' => 'id']],
             [['test_solution_id'], 'exist', 'skipOnError' => true, 'targetClass' => TestSolution::class, 'targetAttribute' => ['test_solution_id' => 'id']],

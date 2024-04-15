@@ -3,9 +3,9 @@
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 
-/** @var app\models\TestForm $model */
+/** @var app\models\TestSolution $model */
 
-/** @var $id */
+/** @var app\models\Quizizz $quiz */
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -23,7 +23,7 @@ $count = 1;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?php foreach ($model::getQuiz($id)->questions as $index => $question) { ?>
+            <?php foreach ($quiz->questions as $index => $question) { ?>
                 <?php if (count($question->answerOptions) > 0) { ?>
                     <div class="solution-form">
                         <div class="alert alert-custom alert-indicator-top indicator-info">
@@ -36,7 +36,10 @@ $count = 1;
                             <table class="table table-bordered">
                                 <?php foreach ($question->answerOptions as $key => $answer) { ?>
                                     <tr>
-                                        <td><?= $form->field($answer, "[$index]answer")->checkbox(['label' => $answer->answer]) ?></td>
+                                        <td>
+                                            <?= $form->field($answer, "[$index]question_id")->hiddenInput([$answer->question_id])->label(false)?>
+                                            <?= $form->field($answer, "[$index]answer")->radio(['label' => $answer->answer, 'value' => $answer->id]) ?>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </table>
