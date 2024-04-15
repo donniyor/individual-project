@@ -7,6 +7,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Авторизация';
 ?>
@@ -43,9 +44,12 @@ $this->title = 'Авторизация';
 
         <div class="form-group">
             <div>
-                <?= Html::submitButton('Вход', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Вход', ['class' => 'btn btn-primary my-3', 'name' => 'login-button']) ?>
             </div>
         </div>
+
+        <p>Еще нет аккаунта <?=Html::a('создать', Url::to(['sing-up']))?></p>
+
 
         <?php ActiveForm::end(); ?>
     </div>

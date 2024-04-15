@@ -1,24 +1,23 @@
 <?php
-
 namespace app\controllers;
 
-//use app\models\SignupForm;
+use app\models\CreateAdminForm;
 use app\models\Users;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
-use app\models\User;
 use Yii;
 use app\components\Controller;
 use app\models\LoginForm;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
+use yii\web\Response;
 
 
 class AuthController extends Controller
 {
     public $layout = 'sign';
 
-    public function actionIn()
+    public function actionIn(): string|Response
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -33,13 +32,25 @@ class AuthController extends Controller
         ]);
     }
 
-    public function actionOut()
+    public function actionSingUp(): string|Response
+    {
+        $model = new CreateAdminForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->createUser();
+            return $this->redirect(['in']);
+        }
+
+        return $this->render('sing-up', ['model' => $model]);
+    }
+
+    public function actionOut(): Response
     {
         Yii::$app->user->logout();
         return $this->redirect(Yii::$app->user->getReturnUrl(['/auth/in']));
     }
 
-    public function actionRequestPasswordReset()
+    public function actionRequestPasswordReset(): Response|string
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -58,13 +69,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword(string $token): string|Response
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -83,7 +90,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function actionVerifyEmail($token)
+    public function actionVerifyEmail(string $token): string
     {
         $user = Users::findByVerificationToken($token);
         $user->status = Users::STATUS_ACTIVE;
