@@ -1,16 +1,12 @@
 <?php
-
 namespace app\components;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
-trait behaviorsSuperAdminTrait
-{
-    /**
-     * @inheritDoc
-     */
-    public function behaviors(): array
+class BaseBehaviors {
+
+    protected static function behaviors(array $array): array
     {
         return [
             'access' => [
@@ -18,11 +14,11 @@ trait behaviorsSuperAdminTrait
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['superAdmin'],
+                        'roles' => $array,
                     ],
                 ],
                 'denyCallback' => function ($rule, $action) {
-                    return \Yii::$app->response->redirect(['/auth/in']);
+                    return Yii::$app->response->redirect(['/auth/in']);
                 },
             ],
             'verbs' => [
@@ -32,5 +28,10 @@ trait behaviorsSuperAdminTrait
                 ],
             ],
         ];
+    }
+
+    public static function getBehaviors(array $array): array
+    {
+        return self::behaviors($array);
     }
 }

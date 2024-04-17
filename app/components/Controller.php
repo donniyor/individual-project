@@ -93,7 +93,7 @@ class Controller extends \yii\web\Controller
         return $result;
     }
 
-    public function flash($type, $message): void
+    public function flash(string $type, string $message): void
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }

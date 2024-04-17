@@ -7,7 +7,6 @@ use yii\helpers\Html;
 
 $this->title = 'Редактировать опрос: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Опросы', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="quizizz-update">

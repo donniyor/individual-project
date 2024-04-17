@@ -23,6 +23,8 @@ use yii\db\ActiveQuery;
  */
 class Quizizz extends BaseModel
 {
+    const STATUS_INACTIVE = 0;
+
     public static function tableName(): string
     {
         return 'quizizz';
@@ -35,6 +37,7 @@ class Quizizz extends BaseModel
             [['description'], 'string'],
             [['user_id', 'status'], 'default', 'value' => Yii::$app->user->id],
             [['user_id', 'status'], 'integer'],
+            ['status', 'default', 'value' => self::STATUS_INACTIVE],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -72,5 +75,23 @@ class Quizizz extends BaseModel
     protected function logTitle(): string
     {
         return 'опрос';
+    }
+
+    public static function getStatusList(): array
+    {
+        return [
+            parent::STATUS_ACTIVE => 'Активен',
+            self::STATUS_INACTIVE => 'Не активен',
+            parent::STATUS_DELETED => 'Удален'
+        ];
+    }
+
+    public static function giveStatus(int $status): ?array
+    {
+        return match($status){
+            self::STATUS_INACTIVE => ['class' => 'table-info'],
+            parent::STATUS_DELETED => ['class' => 'table-danger'],
+            default => null,
+        };
     }
 }

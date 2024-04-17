@@ -2,14 +2,12 @@
 
 namespace app\components;
 
-use app\models\Kindergartens;
 use app\models\LogActions;
-use app\models\Regions;
 use Yii;
+use yii\db\BaseActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 abstract class BaseModel extends ActiveRecord
@@ -25,8 +23,8 @@ abstract class BaseModel extends ActiveRecord
             [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    parent::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    parent::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     'format' => ['date', 'php:d.m.Y H:i:s'],
                 ],
                 'value' => new Expression('NOW()'),

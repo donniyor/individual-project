@@ -4,41 +4,17 @@ namespace app\controllers;
 
 use app\models\LogActions;
 use app\models\LogActionsSearch;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-
+use app\components\BaseBehaviors;
 /**
  * LogActionsController implements the CRUD actions for LogActions model.
  */
 class LogActionsController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['superAdmin'],
-                    ],
-                ],
-                'denyCallback' => function ($rule, $action) {
-                    return \Yii::$app->response->redirect(['/auth/in']);
-                },
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+        return BaseBehaviors::getBehaviors(['superAdmin']);
     }
 
     /**

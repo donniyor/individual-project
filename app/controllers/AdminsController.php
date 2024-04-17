@@ -2,11 +2,11 @@
 
 namespace app\controllers;
 
+use app\components\BaseBehaviors;
 use app\models\CreateAdminForm;
 use app\models\Users;
 use app\models\UsersSearch;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use app\components\Controller;
@@ -17,31 +17,9 @@ use yii\web\NotFoundHttpException;
  */
 class AdminsController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['superAdmin'],
-                    ],
-                ],
-                'denyCallback' => function ($rule, $action) {
-                    return Yii::$app->response->redirect(['/auth/in']);
-                },
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+        return BaseBehaviors::getBehaviors(['superAdmin']);
     }
 
     /**

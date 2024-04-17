@@ -5,24 +5,14 @@ namespace app\controllers;
 use app\components\Controller;
 use app\models\Questions;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\web\Response;
+use app\components\BaseBehaviors;
 
 class QuestionController extends Controller
 {
     public function behaviors(): array
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
+        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
     }
 
     public function actionSaveQuestion(): array

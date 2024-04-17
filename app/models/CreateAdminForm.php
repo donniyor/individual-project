@@ -68,7 +68,7 @@ class CreateAdminForm extends Model
             $role = $authManager->getRole('admin');
 
             Yii::$app->session->setFlash('success', 'Аккаунт был создан. Проверте почту.');
-            return $user->save() && $this->sendEmail($user) && Yii::$app->authManager->assign($role, $user->id);
+            return $user->save() /*&& $this->sendEmail($user) */ && Yii::$app->authManager->assign($role, $user->id);
         }
         Yii::$app->session->setFlash('danger', 'Такой аккаунт не может быть создан.');
         return false;

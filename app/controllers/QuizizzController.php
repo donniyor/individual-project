@@ -2,32 +2,20 @@
 
 namespace app\controllers;
 
-use app\models\AnswerOptions;
-use app\models\Questions;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
 use Throwable;
 use app\components\Controller;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
+use app\components\BaseBehaviors;
 
 class QuizizzController extends Controller
 {
     public function behaviors(): array
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
+        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
     }
 
     public function actionIndex(): string
@@ -44,11 +32,9 @@ class QuizizzController extends Controller
     public function actionCreate(): string|Response
     {
         $model = new Quizizz();
-
+            
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            return $this->saveData($model, 'create');
         } else {
             $model->loadDefaultValues();
         }
@@ -65,8 +51,8 @@ class QuizizzController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['make', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            return $this->saveData($model, 'update');
         }
 
         return $this->render('update', [

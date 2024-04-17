@@ -6,25 +6,13 @@ use app\models\Quizizz;
 use app\models\QuizizzSearch;
 use app\components\Controller;
 use app\models\TestSolution;
-use app\models\TestSolutionSearch;
-use yii\filters\VerbFilter;
+use app\components\BaseBehaviors;
 
 class TestSolutionController extends Controller
 {
-
     public function behaviors(): array
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
+        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
     }
 
     public function actionIndex(): string
