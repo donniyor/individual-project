@@ -35,7 +35,7 @@ class Controller extends \yii\web\Controller
      * @throws BadRequestHttpException
      */
 
-    public function saveData($model, $type = 'create', $imageUpload = false, $images = [], $redirectIndex = false)
+    public function saveData($model, $type = 'create', $imageUpload = false, $images = [])
     {
         $controller = Yii::$app->controller->getUniqueId();
         $env = env('API_HOST');
@@ -63,9 +63,6 @@ class Controller extends \yii\web\Controller
                 if ($model->isNewRecord) {
                     return $this->redirect(['index']);
                 } else {
-                    if ($redirectIndex) {
-                        return $this->redirect('index');
-                    }
                     return $this->redirect(['update', 'id' => $model->id]);
                 }
             } else {
@@ -74,9 +71,6 @@ class Controller extends \yii\web\Controller
                 if ($model->isNewRecord) {
                     return $this->render('create', ['model' => $model]);
                 } else {
-                    if ($redirectIndex) {
-                        return $this->redirect('index');
-                    }
                     return $this->render('update', ['model' => $model]);
                 }
             }

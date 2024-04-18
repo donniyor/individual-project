@@ -65,7 +65,7 @@ class Users extends ActiveRecord implements IdentityInterface
 
     public function beforeDelete(): bool
     {
-        if (parent::beforeDelete() && self::letDelete(Yii::$app->user->id, $this->id)) {
+        if (parent::beforeDelete() && $this->selfDelete($this->id) && Users::isSuperAdminStatic()) {
             $this->status = self::STATUS_DELETED;
             $this->save(false);
             Yii::$app->session->setFlash('success', 'Вы удалили аккаунт.');
@@ -73,6 +73,11 @@ class Users extends ActiveRecord implements IdentityInterface
         }
         Yii::$app->session->setFlash('error', 'Вы не можете удалить этот аккаунт.');
         return false;
+    }
+
+    private function selfDelete(int $id): bool
+    {
+        return Yii::$app->user->id !== $id;
     }
 
     public static function isSuperAdminStatic(): bool

@@ -10,6 +10,8 @@ use app\models\TestSolution;
 use Yii;
 use yii\web\Response;
 use app\components\BaseBehaviors;
+use app\components\BaseModel;
+use yii\db\ActiveQuery;
 
 class TestController extends Controller
 {
@@ -21,7 +23,12 @@ class TestController extends Controller
     public function actionIndex(): string
     {
         $searchModel = new QuizizzSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $queryChange = function(ActiveQuery $query): void {
+            $query->where(['status' => BaseModel::STATUS_ACTIVE]);
+        };
+
+        $dataProvider = $searchModel->search($this->request->queryParams, $queryChange);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

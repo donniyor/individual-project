@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Quizizz;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

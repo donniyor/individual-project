@@ -80,15 +80,15 @@ class Quizizz extends BaseModel
     public static function getStatusList(): array
     {
         return [
-            parent::STATUS_ACTIVE => 'Активен',
             self::STATUS_INACTIVE => 'Не активен',
+            parent::STATUS_ACTIVE => 'Активен',
             parent::STATUS_DELETED => 'Удален'
         ];
     }
 
     public static function giveStatus(int $status): ?array
     {
-        return match($status){
+        return match ($status) {
             self::STATUS_INACTIVE => ['class' => 'table-info'],
             parent::STATUS_DELETED => ['class' => 'table-danger'],
             default => null,

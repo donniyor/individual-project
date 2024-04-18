@@ -1,10 +1,7 @@
 <?php
 
 use app\helpers\Buttons;
-use app\models\Quizizz;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */

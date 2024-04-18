@@ -10,6 +10,9 @@ use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\components\BaseBehaviors;
+use app\models\Users;
+use Yii;
+use yii\db\ActiveQuery;
 
 class QuizizzController extends Controller
 {
@@ -17,11 +20,17 @@ class QuizizzController extends Controller
     {
         return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
     }
-
     public function actionIndex(): string
     {
         $searchModel = new QuizizzSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $queryChange = function(ActiveQuery $query): void {
+            if(!Users::isSuperAdminStatic()){
+                $query->where(['user_id' => Yii::$app->user->id]);
+            }
+        };
+
+        $dataProvider = $searchModel->search($this->request->queryParams, $queryChange);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -32,7 +41,7 @@ class QuizizzController extends Controller
     public function actionCreate(): string|Response
     {
         $model = new Quizizz();
-            
+
         if ($this->request->isPost) {
             return $this->saveData($model, 'create');
         } else {

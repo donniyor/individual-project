@@ -1,11 +1,12 @@
 <?php
+
 namespace app\components;
 
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 class BaseBehaviors {
-
     protected static function behaviors(array $array): array
     {
         return [
