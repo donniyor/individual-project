@@ -27,7 +27,7 @@ class QuizizzController extends Controller
 
         $queryChange = function(ActiveQuery $query): void {
             if(!Users::isSuperAdminStatic()){
-                $query->where(['user_id' => Yii::$app->user->id, 'status' => BaseModel::STATUS_ACTIVE]);
+                $query->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'status', BaseModel::STATUS_DELETED]);
             }
         };
 

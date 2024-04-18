@@ -16,7 +16,7 @@ class Buttons
         $view = '<a href="' . Url::to(["/{$url}/make", "id" => $model->primaryKey]) . '" class="btn btn-bd-light actions" title="Просмотр"><i class="material-icons">visibility</i></a>';
 
         if ($delete) {
-            $delete = $model->status === 1;
+            $delete = $model->status !== -1;
         }
 
         $delete = $delete ? '<a href="' . Url::to(["/{$url}/delete", "id" => $model->primaryKey]) . '" class="btn btn-danger actions confirm-delete" title="Удалить"><i class="material-icons-two-tone">close</i></a>' : '';
