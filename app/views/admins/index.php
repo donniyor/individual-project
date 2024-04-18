@@ -10,7 +10,11 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var app\models\UsersSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-
+/*
+ <p>
+    <?= Html::a('Добавить Пользователя', ['create'], ['class' => 'btn btn-success']) ?>
+</p>
+*/
 $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
 $user = Yii::$app->user;
@@ -19,16 +23,11 @@ $user = Yii::$app->user;
     <h1><?= Html::encode($this->title) ?></h1>
     <hr>
 
-    <p>
-        <?= Html::a('Добавить Пользователя', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions' => static fn($model) => $model->getStatus($model->status),
+        'rowOptions' => static fn ($model) => $model->getStatus($model->status),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'username',
@@ -46,7 +45,7 @@ $user = Yii::$app->user;
                 'header' => 'Действия',
                 'format' => 'html',
                 'headerOptions' => ['width' => '150'],
-                'content' => static fn($model) => Buttons::getUser($model)
+                'content' => static fn ($model) => Buttons::getUser($model)
             ],
         ],
         'pager' => [

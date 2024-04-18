@@ -7,7 +7,6 @@
 
 /** @var \app\controllers\AdminsController $type */
 
-use app\components\BaseModel;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
