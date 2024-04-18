@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Quizizz;
+use app\models\Users;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -21,9 +21,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
     </div>
 
-    <div class="mb-3">
-        <?= $form->field($model, 'status')->dropDownList($model->getStatusList()) ?>
-    </div>
+    <?= Users::isSuperAdminStatic() ? $form->field($model, 'status')->dropDownList($model->getStatusList(), ['class' => 'mb-3 form-control']) : '' ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

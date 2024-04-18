@@ -10,6 +10,7 @@ use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\components\BaseBehaviors;
+use app\components\BaseModel;
 use app\models\Users;
 use Yii;
 use yii\db\ActiveQuery;
@@ -26,7 +27,7 @@ class QuizizzController extends Controller
 
         $queryChange = function(ActiveQuery $query): void {
             if(!Users::isSuperAdminStatic()){
-                $query->where(['user_id' => Yii::$app->user->id]);
+                $query->where(['user_id' => Yii::$app->user->id, 'status' => BaseModel::STATUS_ACTIVE]);
             }
         };
 

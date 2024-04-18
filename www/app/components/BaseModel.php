@@ -47,7 +47,7 @@ abstract class BaseModel extends ActiveRecord
 
     public function beforeDelete(): bool
     {
-        if (parent::beforeDelete() && $this->canRole()) {
+        if (parent::beforeDelete()) {
             $this->setAttribute('status', self::STATUS_DELETED);
             $this->save(false);
             Yii::$app->session->setFlash('success', 'Запись успешно удалена.');
