@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\Controller;
 use app\models\Questions;
+use RolesInterface;
 use Yii;
 use yii\web\Response;
 use app\components\BaseBehaviors;
@@ -12,7 +13,7 @@ class QuestionController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, 'admin']);
     }
 
     public function actionSaveQuestion(): array

@@ -9,6 +9,7 @@ use app\models\TestSolution;
 use app\components\BaseBehaviors;
 use app\components\BaseModel;
 use app\models\Users;
+use RolesInterface;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -16,7 +17,7 @@ class TestSolutionController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::class]);
     }
 
     public function actionIndex(): string

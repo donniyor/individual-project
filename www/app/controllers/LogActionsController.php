@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\LogActions;
 use app\models\LogActionsSearch;
+use RolesInterface;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\components\BaseBehaviors;
@@ -14,7 +15,7 @@ class LogActionsController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE]);
     }
 
     /**

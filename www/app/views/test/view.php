@@ -37,8 +37,8 @@ $count = 1;
                                 <?php foreach ($question->answerOptions as $key => $answer) { ?>
                                     <tr>
                                         <td>
-                                            <?= $form->field($answer, "[$index]question_id")->hiddenInput([$answer->question_id])->label(false)?>
-                                            <?= $form->field($answer, "[$index]answer")->radio(['label' => $answer->answer, 'value' => $answer->id]) ?>
+                                            <?= $answer->id . '-' . $answer->question_id ?>
+                                            <?= Html::radio("answer[$index]", false, ['label' => $answer->answer, 'value' => $answer->id . '-' . $answer->question_id]) ?>
                                         </td>
                                     </tr>
                                 <?php } ?>

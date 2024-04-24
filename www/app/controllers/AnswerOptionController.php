@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\Controller;
 use app\helpers\AnswerForm;
 use app\models\AnswerOptions;
+use RolesInterface;
 use Yii;
 use app\components\BaseBehaviors;
 use yii\web\Response;
@@ -13,7 +14,7 @@ class AnswerOptionController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE]);
     }
 
     public function actionSaveAnswer(): array

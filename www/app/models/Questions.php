@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\components\BaseModel;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "questions".
@@ -68,5 +69,10 @@ class Questions extends BaseModel
     protected function logTitle(): string
     {
         return 'вопрос';
+    }
+
+    public function answerOptionsArray(): array
+    {
+        return ArrayHelper::map($this->answerOptions, 'id', 'answer');
     }
 }

@@ -1,7 +1,6 @@
 <?php 
 
 interface RolesInterface {
-    const superAdmin = 'superAdmin';
-    const admin = 'admin';
-    const user = 'user';
+    const SUPER_ADMIN_ROLE = 'superAdmin';
+    const ADMIN_ROLE = 'admin';
 }

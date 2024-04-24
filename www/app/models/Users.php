@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use RolesInterface;
 use Yii;
 use yii\base\Exception;
 use yii\base\NotSupportedException;
@@ -28,7 +29,7 @@ class Users extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
-    const ROLE_SUPER_ADMIN = 'superAdmin';
+    const ROLE_SUPER_ADMIN = RolesInterface::SUPER_ADMIN_ROLE;
 
     /**
      * {@inheritdoc}
@@ -54,7 +55,7 @@ class Users extends ActiveRecord implements IdentityInterface
         $usersToDelete = Yii::$app->authManager->getRolesByUser($usersToDelete);
         foreach ($myUserRoles as $myUserRole) {
             foreach ($usersToDelete as $userToDelete) {
-                if ($userToDelete->name !== 'superAdmin' && $myUserRole->name !== $userToDelete->name) {
+                if ($userToDelete->name !== RolesInterface::SUPER_ADMIN_ROLE && $myUserRole->name !== $userToDelete->name) {
                     return true;
                 }
             }

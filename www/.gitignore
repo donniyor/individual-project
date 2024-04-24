@@ -1,8 +1,3 @@
-# These are some examples of commonly ignored file patterns.
-# You should customize this list as applicable to your project.
-# Learn more about .gitignore:
-#     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
-
 # Node artifact files
 node_modules/
 dist/
@@ -11,9 +6,6 @@ dist/
 
 # composer itself is not needed
 composer.phar
-
-# composer lock
-composer.lock
 
 #vagrant folder
 /.vagrant
@@ -37,7 +29,7 @@ helm/charts/gp-deployment-0.0.1.tgz
 target/
 
 # JetBrains IDE
-.idea/
+../.idea/
 
 # Unit test reports
 TEST*.xml
@@ -65,4 +57,5 @@ Thumbs.db
 /cors.html
 /dev.sql
 
-/.composer/
+/.composer
+/.idea

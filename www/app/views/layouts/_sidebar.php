@@ -14,10 +14,10 @@ use app\widgets\sidebar;
             </li>
 
             <?= sidebar::make()
-                ->add('Администраторы', 'people_alt', 'admins', ['superAdmin'])
-                ->add('Пройти опрос', 'done_all', 'test', ['superAdmin', 'admin'])
-                ->add('Создать свой опрос', 'quiz', 'quizizz', ['superAdmin', 'admin'])
-                ->add('Результаты опросов', 'check_circle', 'test-solution', ['superAdmin', 'admin'])
+                ->add('Пользователи', 'people_alt', 'admins', [RolesInterface::SUPER_ADMIN_ROLE])
+                ->add('Пройти опрос', 'done_all', 'test', [RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE])
+                ->add('Создать свой опрос', 'quiz', 'quizizz', [RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE])
+                ->add('Результаты опросов', 'check_circle', 'test-solution', [RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE])
                 ->all()
             ?>
 

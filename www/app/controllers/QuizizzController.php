@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
+use RolesInterface;
 use Throwable;
 use app\components\Controller;
 use yii\db\StaleObjectException;
@@ -19,7 +20,7 @@ class QuizizzController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin', 'admin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE]);
     }
     public function actionIndex(): string
     {

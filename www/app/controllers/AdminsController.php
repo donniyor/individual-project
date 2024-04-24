@@ -6,6 +6,7 @@ use app\components\BaseBehaviors;
 use app\models\CreateAdminForm;
 use app\models\Users;
 use app\models\UsersSearch;
+use RolesInterface;
 use Yii;
 use app\components\Controller;
 use yii\web\NotFoundHttpException;
@@ -17,7 +18,7 @@ class AdminsController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors(['superAdmin']);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE]);
     }
 
     /**

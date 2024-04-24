@@ -5,6 +5,7 @@ namespace app\commands;
 use app\models\Users;
 use app\rules\canCreateRule;
 use app\rules\canDeleteRule;
+use RolesInterface;
 use Yii;
 use yii\console\Controller;
 
@@ -32,7 +33,7 @@ class MyRbacController extends Controller
         $auth->add($canAdmin);
 
         /* Users */
-        $superAdminRole = $auth->createRole('superAdmin');
+        $superAdminRole = $auth->createRole(RolesInterface::SUPER_ADMIN_ROLE);
         $auth->add($superAdminRole);
         $adminRole = $auth->createRole('admin');
         $auth->add($adminRole);
