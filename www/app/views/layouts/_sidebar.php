@@ -1,5 +1,6 @@
 <?php
 
+use app\components\RolesInterface;
 use app\widgets\sidebar;
 
 ?>

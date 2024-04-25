@@ -9,7 +9,7 @@ use app\models\TestSolution;
 use app\components\BaseBehaviors;
 use app\components\BaseModel;
 use app\models\Users;
-use RolesInterface;
+use app\components\RolesInterface;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -17,7 +17,7 @@ class TestSolutionController extends Controller
 {
     public function behaviors(): array
     {
-        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::class]);
+        return BaseBehaviors::getBehaviors([RolesInterface::SUPER_ADMIN_ROLE, RolesInterface::ADMIN_ROLE]);
     }
 
     public function actionIndex(): string
@@ -43,7 +43,11 @@ class TestSolutionController extends Controller
     public function actionView(int $id): string
     {
         return $this->render('view', [
-            'quiz' => Quizizz::find()->where(['id' => $id])->with(['questions', 'questions.answerOptions'])->one(),
+            'quiz' => Quizizz::find()->where(['id' => $id])->with([
+                'questions',
+                'questions.answerOptions',
+                'questions.answerOptions.problemSolvings'
+            ])->one(),
             'testSolution' => TestSolution::find()->where(['quiz_id' => $id])->all()
         ]);
     }

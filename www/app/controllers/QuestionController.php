@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\components\Controller;
 use app\models\Questions;
-use RolesInterface;
+use app\components\RolesInterface;
 use Yii;
 use yii\web\Response;
 use app\components\BaseBehaviors;

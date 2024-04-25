@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\models\LogActions;
 use app\models\LogActionsSearch;
-use RolesInterface;
+use app\components\RolesInterface;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\components\BaseBehaviors;

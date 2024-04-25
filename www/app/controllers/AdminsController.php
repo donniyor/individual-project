@@ -3,10 +3,10 @@
 namespace app\controllers;
 
 use app\components\BaseBehaviors;
+use app\components\RolesInterface;
 use app\models\CreateAdminForm;
 use app\models\Users;
 use app\models\UsersSearch;
-use RolesInterface;
 use Yii;
 use app\components\Controller;
 use yii\web\NotFoundHttpException;

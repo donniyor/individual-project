@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
-use RolesInterface;
+use app\components\RolesInterface;
 use Throwable;
 use app\components\Controller;
 use yii\db\StaleObjectException;

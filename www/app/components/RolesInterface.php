@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+namespace app\components;
 
 interface RolesInterface {
     const SUPER_ADMIN_ROLE = 'superAdmin';

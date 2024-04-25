@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\components\Controller;
 use app\helpers\AnswerForm;
 use app\models\AnswerOptions;
-use RolesInterface;
+use app\components\RolesInterface;
 use Yii;
 use app\components\BaseBehaviors;
 use yii\web\Response;

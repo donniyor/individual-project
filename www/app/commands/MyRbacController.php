@@ -3,9 +3,7 @@
 namespace app\commands;
 
 use app\models\Users;
-use app\rules\canCreateRule;
-use app\rules\canDeleteRule;
-use RolesInterface;
+use app\components\RolesInterface;
 use Yii;
 use yii\console\Controller;
 

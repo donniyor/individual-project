@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use RolesInterface;
+use app\components\RolesInterface;
 use Yii;
 use yii\base\Exception;
 use yii\base\NotSupportedException;

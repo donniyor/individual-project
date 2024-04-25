@@ -7,7 +7,7 @@ use app\models\ProblemSolving;
 use app\models\Quizizz;
 use app\models\QuizizzSearch;
 use app\models\TestSolution;
-use RolesInterface;
+use app\components\RolesInterface;
 use yii\web\Request;
 use yii\web\Response;
 use app\components\BaseBehaviors;
