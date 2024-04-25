@@ -26,6 +26,10 @@ class AnswerForm
         $textInput = Html::textInput("Answer", $answerOptions->answer, $textareaAttributes);
         $label = Html::label('Ответ', null, ['class' => 'form-label']);
 
-        return "<div class=\"mb-3 ms-5\">$label$textInput</div>";
+        $icon = '<i class="material-icons d-block m-0 p-0">delete</i>';
+        $deleteButton = Html::button($icon, ['class' => 'btn btn-danger px-2 confirm-delete ajax-delete-answer', 'title' => 'Удалить ответ']);
+
+
+        return '<div class="mb-3 ms-5">' . $label . '<div class="input-group">' . $textInput . $deleteButton . '</div></div>';
     }
 }

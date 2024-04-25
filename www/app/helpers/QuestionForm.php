@@ -25,7 +25,9 @@ class QuestionForm
 
         $textarea = Html::textarea('QuestionForm', $question->question, $textareaAttributes);
         $label = Html::label('Вопрос', null, ['class' => 'form-label']);
+        $icon = '<i class="material-icons d-block m-0 p-0">delete</i>';
+        $deleteButton = Html::button($icon, ['class' => 'btn btn-danger px-2 confirm-delete  ajax-delete-question', 'title' => 'Удалить ответ']);
 
-        return "<div class=\"mb-3\">$label$textarea</div>";
+        return "<div class=\"mb-3\">" . $label . "<div class='input-group'>" . $textarea . $deleteButton . "</div></div>";
     }
 }
